@@ -30,6 +30,22 @@ function addBookToLibrary() {
 
 const displayLibrary = () => {
   const table = document.getElementById('library-table');
+    // clear the table
+  table.innerHTML = '';
+
+
+  if (myLibrary.length === 0) {
+    // display a message if the array is empty
+    const row = table.insertRow();
+    row.insertCell().innerHTML = 'No books have been found';
+  } else {
+ // create the header row
+ const headerRow = table.insertRow();
+ headerRow.insertCell().innerHTML = 'Title';
+ headerRow.insertCell().innerHTML = 'Author';
+ headerRow.insertCell().innerHTML = 'Number of Pages';
+ headerRow.insertCell().innerHTML = 'Read';
+ headerRow.insertCell().innerHTML = 'Actions';
 
   myLibrary.forEach(book => {
     const row = table.insertRow();
@@ -41,7 +57,16 @@ const displayLibrary = () => {
     } else {
       row.insertCell().innerHTML = 'No';
     }
-    
+    const deleteCell = row.insertCell();
+    const deleteButton = document.createElement('button');
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.addEventListener('click', () => {
+      // remove the book from the array
+      myLibrary = myLibrary.filter(b => b !== book);
+      // refresh the table
+      displayLibrary();
+    });
+    deleteCell.appendChild(deleteButton);
   });
-}
+}}
 
